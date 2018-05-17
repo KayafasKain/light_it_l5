@@ -76,7 +76,6 @@ def main():
 
         except ValueError as e:
             print(e)
-        finally:
             sizes["unit"] = 2
             sizes["squad"] = 2
             sizes["army"] = 2        
