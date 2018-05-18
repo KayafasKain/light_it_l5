@@ -1,9 +1,7 @@
 import json
-import argparse
 from random import randint
 
 from unit import unit as un
-from unit import healer as he
 from unit import vehicle as ve
 
 from unit.unit_type import unit_type as ut
@@ -11,7 +9,6 @@ from unit import squad as sq
 from unit import army as ar
 from combat import formation as fo
 from combat import strategy as st
-from combat import battle as ba
 
 class JsonInputAdapter():
     
@@ -60,6 +57,9 @@ class JsonInputAdapter():
             self.data = json.load(f)
 
     def convert(self):
+        """
+            converting json to force object
+        """
         self.recognize_strategy()
         self.prepeare_sizes()
         self.one_force = ar.Army(self.data["armies"][0]["name"] , [], self.formations[randint(0, len(self.formations)-1)], self.strategy)
@@ -68,6 +68,9 @@ class JsonInputAdapter():
         return self.one_force
 
     def initiate(self, squad, formations, strategies, data, ranks, sizes, strategy, depth = 0):
+        """
+            Recursively filling force object
+        """
         if depth == len(ranks)-1:
             for i in data:
                 print(i)
@@ -90,12 +93,12 @@ class JsonInputAdapter():
                     self.initiate( squad.get_last_member(), self.formations, self.strategies, i["squads"], self.ranks, self.sizes, strategy, depth+1)
                 elif 'units' in i.keys(): 
                     squad.add_member(sq.Squad(i["name"], [], formations[randint(0, len(formations)-1)]))
-                    self.initiate( squad.get_last_member(), self.formations, self.strategies, i['units'], self.ranks, self.sizes, strategy, depth+1)
-
-
-  
+                    self.initiate( squad.get_last_member(), self.formations, self.strategies, i['units'], self.ranks, self.sizes, strategy, depth+1) 
 
     def recognize_strategy(self):
+        """
+            Recognozing and saving strategy
+        """
         if "random" in self.data["armies"][0]["strategy"]:
             self.strategy = self.strategies[randint(0, len(self.strategies)-1)]
         elif "weakest" in self.data["armies"][0]["strategy"]:
@@ -134,22 +137,4 @@ class JsonInputAdapter():
         """
         return len(self.data["armies"][0]["squads"][0]["units"])                   
 
-def main():
-    parser = argparse.ArgumentParser(
-        description="Adapting battle simulator json",
-    )
-
-    parser.add_argument(
-        "path",
-        metavar="PATH",
-        nargs="+",
-        help="Force name",
-    )
-
-    args = parser.parse_args()
-    instance = JsonInputAdapter(args.path[0])
-    print(instance.get_armies_num())
-
     
-if __name__ == "__main__":
-    main()
