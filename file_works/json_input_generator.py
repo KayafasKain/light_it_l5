@@ -46,7 +46,7 @@ class JsonInputGenerator():
 
         return { "name": name, "units": units }
 
-    def generate_army(self, appendix, sq_min = 2, sq_max = 2, v_min = 2, v_max = 2, s_min = 2, s_max = 2):
+    def generate_army(self, appendix, strategy = "random", sq_min = 2, sq_max = 2, v_min = 2, v_max = 2, s_min = 2, s_max = 2):
         """
             Generating army, consist of squads
         """
@@ -56,19 +56,22 @@ class JsonInputGenerator():
         for i in range(randint(sq_min, sq_max)):
             squads.append(self.generate_squad(i, v_min, v_max, s_min, s_max))
 
+        print("STRATARAERARARAR")
+        print(strategy)
         return {
             "name": name,
+            "strategy": strategy,
             "squads": squads
         }
 
-    def generate_force(self, amount = 2, sq_min = 2, sq_max = 2, v_min = 2, v_max = 2, s_min = 2, s_max = 2):
+    def generate_force(self, amount = 2, strategy = "random", sq_min = 2, sq_max = 2, v_min = 2, v_max = 2, s_min = 2, s_max = 2):
         """
             Generating force, consists of armies
         """
 
         armies = []
         for i in range(amount):
-            armies.append(self.generate_army(i, sq_min, sq_max, v_min, v_max, s_min, s_max))
+            armies.append(self.generate_army(i, strategy, sq_min, sq_max, v_min, v_max, s_min, s_max))
 
         return {
             "armies": armies
@@ -85,6 +88,13 @@ def main():
         metavar='NAME',
         nargs='+',
         help='Force name',
+    )
+
+    parser.add_argument(
+        'strategy',
+        metavar='STRAT',
+        nargs='+',
+        help='Army strategy',
     )
 
     parser.add_argument(
@@ -153,17 +163,17 @@ def main():
 
     dir_path = os.path.dirname(__file__)
     fname = dir_path + '_armies.json'
-    generator = JsonInputGenerator(args.forces)
+    generator = JsonInputGenerator(args.forces[0])
     result = generator.generate_force( 
-        args.army_num, 
+        args.army_num, args.strategy[0],
         args.min_squads, args.max_squads,
         args.min_soldiers, args.max_soldiers,
         args.min_vehicles, args.max_vehicles
     )
 
     json.dump(result, sys.stdout, sort_keys=True, indent=2 if args.pprint else None)
-    with open(fname, 'r+') as outfile:
-        json.dump(result, outfile, sort_keys=True, indent=2 if args.pprint else None)    
+    # with open(fname, 'r+') as outfile:
+    #     json.dump(result, outfile, sort_keys=True, indent=2 if args.pprint else None)    
 
 
 if __name__ == '__main__':
