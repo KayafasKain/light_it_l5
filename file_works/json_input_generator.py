@@ -171,9 +171,9 @@ def main():
         args.min_vehicles, args.max_vehicles
     )
 
-    json.dump(result, sys.stdout, sort_keys=True, indent=2 if args.pprint else None)
-    # with open(fname, 'r+') as outfile:
-    #     json.dump(result, outfile, sort_keys=True, indent=2 if args.pprint else None)    
+    json.dump(result, sys.stdout, sort_keys=False, indent=2 if args.pprint else None)
+    with open(fname, 'r+') as outfile:
+        json.dump(result, outfile, sort_keys=False, indent=2 if args.pprint else None)    
 
 
 if __name__ == '__main__':
