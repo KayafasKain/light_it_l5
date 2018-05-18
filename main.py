@@ -4,6 +4,7 @@ import copy
 
 from unit import unit as un
 from unit import healer as he
+from unit import vehicle as ve
 
 from unit.unit_type import unit_type as ut
 from unit import squad as sq 
@@ -97,16 +98,17 @@ def main():
             sizes["squad"] = 2
             sizes["army"] = 2        
 
-        eq_force = ar.Army("lf_middle " , [], formations[randint(0, len(formations)-1)], strategies[randint(0, len(strategies)-1)])
-        som_force = ar.Army("sombra " , [], formations[randint(0, len(formations)-1)], strategies[randint(0, len(strategies)-1)])
+        print(str(jsone.convert()))            
+        # eq_force = ar.Army("lf_middle " , [], formations[randint(0, len(formations)-1)], strategies[randint(0, len(strategies)-1)])
+        # som_force = ar.Army("sombra " , [], formations[randint(0, len(formations)-1)], strategies[randint(0, len(strategies)-1)])
 
-        initiate(eq_force, eq_units, formations, strategies, eq_force.get_name(), ranks, sizes, 0)
-        initiate(som_force, som_units, formations, strategies, som_force.get_name(), ranks, sizes, 0)           
+        # initiate(eq_force, eq_units, formations, strategies, eq_force.get_name(), ranks, sizes, 0)
+        # initiate(som_force, som_units, formations, strategies, som_force.get_name(), ranks, sizes, 0)           
 
-        battle = ba.Battle(eq_force, som_force, ranks)
-        battle.print_army_rec(eq_force, ranks)
-        battle.print_army_rec(som_force, ranks)
-        battle.encouter()
+        # battle = ba.Battle(eq_force, som_force, ranks)
+        # battle.print_army_rec(eq_force, ranks)
+        # battle.print_army_rec(som_force, ranks)
+        # battle.encouter()
            
 
 
