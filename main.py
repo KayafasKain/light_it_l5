@@ -83,11 +83,18 @@ def main():
         print("squad consist of units")
         print("army consist of squad")
         print("force consist of armies")
+
+        from_file = False
+
         try:
-            jsone = jia.JsonInputAdapter(input("path:"))
-            sizes["unit"] = int(input("Pleas, enter squad size (must be > 2): ")) 
-            sizes["squad"] = int(input("Pleas, enter army size (must be > 2): ")) 
-            sizes["army"] = int(input("Pleas, enter force size (must be > 2): "))
+            if int(input("enter '1', to load from file:")):
+                jsone_one = jia.JsonInputAdapter(input("path_one:"))
+                jsone_two = jia.JsonInputAdapter(input("path_two:"))
+                from_file = True
+            else:
+                sizes["unit"] = int(input("Pleas, enter squad size (must be > 2): ")) 
+                sizes["squad"] = int(input("Pleas, enter army size (must be > 2): ")) 
+                sizes["army"] = int(input("Pleas, enter force size (must be > 2): "))
 
             if sizes["unit"] < 2 or sizes["squad"] < 2 or sizes["army"] < 2:
                 raise ValueError("Sizes must be > 2")       
@@ -98,17 +105,21 @@ def main():
             sizes["squad"] = 2
             sizes["army"] = 2        
 
-        print(str(jsone.convert()))            
-        # eq_force = ar.Army("lf_middle " , [], formations[randint(0, len(formations)-1)], strategies[randint(0, len(strategies)-1)])
-        # som_force = ar.Army("sombra " , [], formations[randint(0, len(formations)-1)], strategies[randint(0, len(strategies)-1)])
+        print(str(jsone.convert()))
+        if from_file:
+            eq_force = jsone_one.convert()
+            som_force = jsone_two.convert()
+        else:            
+            eq_force = ar.Army("lf_middle " , [], formations[randint(0, len(formations)-1)], strategies[randint(0, len(strategies)-1)])
+            som_force = ar.Army("sombra " , [], formations[randint(0, len(formations)-1)], strategies[randint(0, len(strategies)-1)])
 
-        # initiate(eq_force, eq_units, formations, strategies, eq_force.get_name(), ranks, sizes, 0)
-        # initiate(som_force, som_units, formations, strategies, som_force.get_name(), ranks, sizes, 0)           
+        initiate(eq_force, eq_units, formations, strategies, eq_force.get_name(), ranks, sizes, 0)
+        initiate(som_force, som_units, formations, strategies, som_force.get_name(), ranks, sizes, 0)           
 
-        # battle = ba.Battle(eq_force, som_force, ranks)
-        # battle.print_army_rec(eq_force, ranks)
-        # battle.print_army_rec(som_force, ranks)
-        # battle.encouter()
+        battle = ba.Battle(eq_force, som_force, ranks)
+        battle.print_army_rec(eq_force, ranks)
+        battle.print_army_rec(som_force, ranks)
+        battle.encouter()
            
 
 

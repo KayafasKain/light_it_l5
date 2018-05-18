@@ -62,7 +62,7 @@ class JsonInputAdapter():
     def convert(self):
         self.recognize_strategy()
         self.prepeare_sizes()
-        self.one_force = ar.Army("" , [], self.formations[randint(0, len(self.formations)-1)], self.strategy)
+        self.one_force = ar.Army(self.data["armies"][0]["name"] , [], self.formations[randint(0, len(self.formations)-1)], self.strategy)
         self.initiate(self.one_force, self.formations, self.strategies, self.data["armies"], self.ranks, self.sizes, 0) 
 
         return self.one_force
