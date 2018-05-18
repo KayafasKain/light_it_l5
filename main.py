@@ -12,6 +12,7 @@ from combat import formation as fo
 from combat import strategy as st
 from combat import battle as ba
 from file_works import json_input_generator as jig
+from file_works import json_input_adapter as jia
 
 
 def initiate(squad, units, formations, strategies, side_name, ranks, sizes, depth=0):
@@ -77,10 +78,12 @@ def main():
     ]    
 
     while True:
+
         print("squad consist of units")
         print("army consist of squad")
         print("force consist of armies")
         try:
+            jsone = jia.JsonInputAdapter(input("path:"))
             sizes["unit"] = int(input("Pleas, enter squad size (must be > 2): ")) 
             sizes["squad"] = int(input("Pleas, enter army size (must be > 2): ")) 
             sizes["army"] = int(input("Pleas, enter force size (must be > 2): "))
