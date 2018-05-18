@@ -92,7 +92,9 @@ class Unit:
             if self.attack_speed < 0:
                 self.set_attack_speed(0) 
             if self.health < 0:
-                self.set_health(0)                                 
+                self.set_health(0)
+                self.set_attack_speed(0) 
+                self.set_damage(0)                                  
 
 
 

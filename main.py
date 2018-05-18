@@ -7,20 +7,25 @@ from unit import healer as he
 
 from unit.unit_type import unit_type as ut
 from unit import squad as sq 
+from unit import army as ar
 from combat import formation as fo
+from combat import strategy as st
 from combat import battle as ba
-from file_input import file_input as fi
+from file_works import json_input_generator as jig
 
 
-def initiate(squad, units, formations, side_name, ranks, sizes, depth=0):
+def initiate(squad, units, formations, strategies, side_name, ranks, sizes, depth=0):
     if depth == len(ranks)-1:
         for i in range(int(sizes[ranks[depth]])):            
             squad.add_member(units[randint(0, len(units)-1)])
         return
     else:
         for i in range(sizes[ranks[depth]]):
-            squad.add_member(sq.Squad(side_name + " " + ranks[depth] + str(i), [], formations[randint(0, len(formations)-1)]))
-            initiate( squad.get_last_member(), units, formations, side_name, ranks, sizes, depth+1)    
+            if depth == 0:
+                squad.add_member(ar.Army(side_name + " " + ranks[depth] + str(i), [], formations[randint(0, len(formations)-1)], strategies[randint(0, len(strategies)-1)]))
+            else:
+                squad.add_member(sq.Squad(side_name + " " + ranks[depth] + str(i), [], formations[randint(0, len(formations)-1)]))
+            initiate( squad.get_last_member(), units, formations, strategies, side_name, ranks, sizes, depth+1)    
 
 def main():
 
@@ -62,6 +67,15 @@ def main():
         fo.Formation("helthiest ahead", 3),
     ]
 
+    strategies = [
+        st.Strategy("strongest first", 1),
+        st.Strategy("weakest first", 2),
+        st.Strategy("fastest first", 3),
+        st.Strategy("slowest first", 4),
+        st.Strategy("helthiest first", 5),
+        st.Strategy("weak constitudtion first", 6),
+    ]    
+
     while True:
         print("squad consist of units")
         print("army consist of squad")
@@ -80,11 +94,11 @@ def main():
             sizes["squad"] = 2
             sizes["army"] = 2        
 
-        eq_force = sq.Squad("lf_middle", [], formations[randint(0, len(formations)-1)])
-        som_force = sq.Squad("sombra", [], formations[randint(0, len(formations)-1)]) 
+        eq_force = ar.Army("lf_middle " , [], formations[randint(0, len(formations)-1)], strategies[randint(0, len(strategies)-1)])
+        som_force = ar.Army("sombra " , [], formations[randint(0, len(formations)-1)], strategies[randint(0, len(strategies)-1)])
 
-        initiate(eq_force, eq_units, formations, eq_force.get_name(), ranks, sizes, 0)
-        initiate(som_force, som_units, formations, som_force.get_name(), ranks, sizes, 0)           
+        initiate(eq_force, eq_units, formations, strategies, eq_force.get_name(), ranks, sizes, 0)
+        initiate(som_force, som_units, formations, strategies, som_force.get_name(), ranks, sizes, 0)           
 
         battle = ba.Battle(eq_force, som_force, ranks)
         battle.print_army_rec(eq_force, ranks)

@@ -30,22 +30,28 @@ class Squad(Unit):
         prop_list = [
             self.name,
             self.formation.name, 
-            "{} {:^.3f}".format("initiative:", self.initiative),
+            "{:^.3f}{}".format(self.get_damage() ,"dam"), 
+            "{:^.3f}{}".format(self.get_attack_speed(),"spd"), 
+            "{:^.3f}{}".format(self.get_health(),"hp"),
+            "{:^.3f}{}".format(self.initiative, "initiative:"),
             "{} {}".format(str(self.get_casulties()), "lost")
         ]
         string =  "|".join("{: ^25}".format(x) for x in prop_list)
 
         return string       
 
-    def attack(self, foe):
+    def attack(self, foe, log):
         """
             Represents ability to attack
         """
-        for a_unit in self.get_member_list():
-            for d_unit in foe.get_member_list():
-                if "get_healing_strenght" in dir(a_unit):
-                    a_unit.heal(self.get_member_list())         
-                d_unit = a_unit.attack(d_unit)             
+        if(foe.get_health() > 0 and self.get_health() > 0): 
+            for a_unit in self.get_member_list():
+                for d_unit in foe.get_member_list():
+                    if "get_healing_strenght" in dir(a_unit):
+                        log.info(a_unit.get_name() + " applies heal")
+                        a_unit.heal(self.get_member_list())         
+                    d_unit = a_unit.attack(d_unit)
+        return foe             
 
     def calculate_initiative(self):
         """
