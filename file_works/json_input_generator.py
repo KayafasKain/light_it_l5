@@ -80,89 +80,89 @@ class JsonInputGenerator():
 def main():
 
     parser = argparse.ArgumentParser(
-        description='Battle simulator template',
+        description="Battle simulator template",
     )
 
     parser.add_argument(
-        'forces',
-        metavar='NAME',
-        nargs='+',
-        help='Force name',
+        "forces",
+        metavar="NAME",
+        nargs="+",
+        help="Force name",
     )
 
     parser.add_argument(
-        'strategy',
-        metavar='STRAT',
-        nargs='+',
-        help='Army strategy',
+        "strategy",
+        metavar="STRAT",
+        nargs="+",
+        help="Army strategy",
     )
 
     parser.add_argument(
-        '--army-num',
-        metavar='AMOUNT',
+        "--army-num",
+        metavar="AMOUNT",
         type=int,
         required=False,
-        help='Amount of armies',
+        help="Amount of armies",
     )
 
     parser.add_argument(
-        '--min-squads',
-        metavar='N',
+        "--min-squads",
+        metavar="N",
         type=int,
         required=False,
         help="Min. number of squads per army",
     )
 
     parser.add_argument(
-        '--max-squads',
-        metavar='N',
+        "--max-squads",
+        metavar="N",
         type=int,
         required=False,
         help="Max. number of squads per army",
     )
 
     parser.add_argument(
-        '--min-soldiers',
-        metavar='N',
+        "--min-soldiers",
+        metavar="N",
         type=int,
         required=False,
         help="Min. number of soldiers per squad",
     )
 
     parser.add_argument(
-        '--max-soldiers',
-        metavar='N',
+        "--max-soldiers",
+        metavar="N",
         type=int,
         required=False,
         help="Max. number of soldiers per squad",
     )
 
     parser.add_argument(
-        '--min-vehicles',
-        metavar='N',
+        "--min-vehicles",
+        metavar="N",
         type=int,
         required=False,
         help="Min. number of vehicles per squad",
     )
 
     parser.add_argument(
-        '--max-vehicles',
-        metavar='N',
+        "--max-vehicles",
+        metavar="N",
         type=int,
         required=False,
         help="Max. number of vehicles per squad",
     )
 
     parser.add_argument(
-        '--pprint',
-        action='store_true',
+        "--pprint",
+        action="store_true",
         help="Produce human-readable json",
     )
 
     args = parser.parse_args()
 
     dir_path = os.path.dirname(__file__)
-    fname = dir_path + '_armies.json'
+    fname = dir_path + "_armies.json"
     generator = JsonInputGenerator(args.forces[0])
     result = generator.generate_force( 
         args.army_num, args.strategy[0],
@@ -172,9 +172,9 @@ def main():
     )
 
     json.dump(result, sys.stdout, sort_keys=False, indent=2 if args.pprint else None)
-    with open(fname, 'r+') as outfile:
+    with open(fname, "r+") as outfile:
         json.dump(result, outfile, sort_keys=False, indent=2 if args.pprint else None)    
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     sys.exit(main())
