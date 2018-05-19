@@ -26,15 +26,8 @@ class CustomLogger():
             self.config = json.load(f) 
         path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         fname = self.config["handlers"]["file"]["filename"] 
-        self.config["handlers"]["file"]["filename"] = path + self.get_correct_slash() + fname 
-        print(self.config["handlers"]["file"]["filename"])         
+        self.config["handlers"]["file"]["filename"] = os.path.join(path, fname)     
         logging.config.dictConfig(self.config)
-
-    def get_correct_slash(self):
-        if os.name == "nt":
-            return "\\"
-        else:
-            return "/"
 
     def get_logger(self, name = "COMBAT"):
         """

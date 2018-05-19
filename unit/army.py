@@ -42,19 +42,20 @@ class Army(Squad):
             foe.set_member_list(self.apply_strategy(foe.get_member_list())) 
             for a_squad in self.get_member_list():
                 for d_squad in foe.get_member_list():
-                    log.info("attacking: ")
-                    log.info(str(a_squad))
-                    log.info("defending: ")
-                    log.info(str(d_squad))                
-                    if "get_healing_strenght" in dir(a_squad):
-                        a_squad.heal(self.get_member_list())         
-                    d_squad = a_squad.attack(d_squad, log) 
-                    if a_squad.get_health() > d_squad.get_health():
-                        log.info("won: ")
+                    if d_squad.get_health() > 0 and a_squad.get_health() > 0:
+                        log.info("attacking: ")
                         log.info(str(a_squad))
-                    else:
-                        log.info("won: ")
-                        log.info(str(d_squad))
+                        log.info("defending: ")
+                        log.info(str(d_squad))                
+                        if "get_healing_strenght" in dir(a_squad):
+                            a_squad.heal(self.get_member_list())         
+                        d_squad = a_squad.attack(d_squad, log) 
+                        if a_squad.get_health() > d_squad.get_health():
+                            log.info("won: ")
+                            log.info(str(a_squad))
+                        else:
+                            log.info("won: ")
+                            log.info(str(d_squad))
 
         return foe                                                         
 

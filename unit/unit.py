@@ -1,7 +1,9 @@
 from .unit_type import unit_type as ut
+from .unit_base import UnitBase
 from math import ceil
 
-class Unit:
+
+class Unit(UnitBase):
     """
         These class stands for representing
         unit of any type, name and stats
