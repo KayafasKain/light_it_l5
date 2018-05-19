@@ -1,12 +1,11 @@
 from .unit_type import unit_type as ut
 from abc import ABCMeta, abstractmethod, abstractproperty
 
-class UnitBase():
+class UnitBase(metaclass=ABCMeta):
     """
         These class stands for representing
         unit of any type, name and stats
     """
-    __metaclass__ = ABCMeta
     @abstractproperty
     def __init__(self, name = "Wonderbolt", unit_type = ut.UnitType(), damage = 50,
                 attack_speed = 200, health = 100):
