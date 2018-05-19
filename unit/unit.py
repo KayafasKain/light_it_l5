@@ -44,7 +44,7 @@ class Unit:
 
         return "|{}|".format(string)
 
-    def attack(self, foe):
+    def attack(self, foe, log):
         """
             Gives ability to attack. Accepts and returns 
             "foe" - the instance of enemy unit
@@ -55,6 +55,7 @@ class Unit:
             print(e)
 
         self.decrease_cooldown()
+
         if self.get_health() > 0 and self.get_cooldown() == 0:
             faster_strike = self.get_attack_speed() > foe.get_attack_speed()
             strikes_per_turn = 1
@@ -65,6 +66,12 @@ class Unit:
                     strikes_per_turn = speed_overwhelming 
 
             for i in range(0, strikes_per_turn):
+                log.warning("{} {} {}".format( 
+                        self.name, 
+                        "dealing damage: " ,
+                        (self.get_damage() * self.expirience)
+                    )
+                )
                 foe.set_health(foe.get_health() - (self.get_damage() * self.expirience))
                 if foe.get_health() <= 0:
                     break
@@ -79,6 +86,10 @@ class Unit:
 
             self.refresh_stats()
             self.set_cooldown()
+
+        elif self.get_cooldown() > 0:
+            log.warning("{} {} {}".format(self.get_name(), "in cooldown for: " ,self.get_cooldown()))
+
 
         return foe
 

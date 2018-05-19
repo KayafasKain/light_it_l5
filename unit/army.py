@@ -18,15 +18,6 @@ class Army(Squad):
         super().__init__(name, member_list, formation)
         self.strategy = strategy
 
-    # def __gt__(self, foe):
-    #     return self.calculate_initiative() > foe.calculate_initiative()
-
-    # def __lt__(self, foe):
-    #     return self.calculate_initiative() < foe.calculate_initiative()
-
-    # def __eq__(self, foe):
-    #     return self.calculate_initiative() == foe.calculate_initiative()
-
     def __str__(self):
         """
             Converting class instace to string
@@ -51,19 +42,19 @@ class Army(Squad):
             foe.set_member_list(self.apply_strategy(foe.get_member_list())) 
             for a_squad in self.get_member_list():
                 for d_squad in foe.get_member_list():
-                    log.warning("attacking: ")
-                    log.warning(str(a_squad))
-                    log.warning("defending: ")
-                    log.warning(str(d_squad))                
+                    log.info("attacking: ")
+                    log.info(str(a_squad))
+                    log.info("defending: ")
+                    log.info(str(d_squad))                
                     if "get_healing_strenght" in dir(a_squad):
                         a_squad.heal(self.get_member_list())         
                     d_squad = a_squad.attack(d_squad, log) 
                     if a_squad.get_health() > d_squad.get_health():
-                        log.error("won: ")
-                        log.error(str(a_squad))
+                        log.info("won: ")
+                        log.info(str(a_squad))
                     else:
-                        log.error("won: ")
-                        log.error(str(d_squad))
+                        log.info("won: ")
+                        log.info(str(d_squad))
 
         return foe                                                         
 

@@ -19,7 +19,7 @@ class Healer(Unit):
         """        
         self.healing_strenght = healing
 
-    def heal(self, squad_members):
+    def heal(self, squad_members, log):
         """
             Allows healer to heal. Acepts the list of
             squad members. Each time find wounded 
@@ -30,9 +30,10 @@ class Healer(Unit):
             
         """
         wounded_count, pos_list = self.count_wounded(squad_members)
-
+        log.info("{} {}".format(self.get_name(), "heal"))
         if wounded_count > 0:
             heal_strenght = self.healing_strenght / wounded_count
+            log.warning("{} {}".format("heal strenght:", str(heal_strenght)))
             for i in pos_list:
                 self.restore_health(squad_members[i], heal_strenght)
                 self.restore_speed(squad_members[i], heal_strenght)

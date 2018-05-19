@@ -1,7 +1,7 @@
 from file_works import custom_logger as cla
 import logging
 import os
-import os
+
 """
     Work in progress yet
 """
@@ -19,14 +19,9 @@ class Battle:
             self.army_one = army_one
             self.army_two = army_two
             self.ranks = ranks
-            # logging.config.dictConfig()
-            # dir_path = os.path.dirname(os.path.realpath(__file__))
-            # fname = dir_path + '_goes.log'
             custom_log = cla.CustomLogger()
-            self.log = custom_log.get_logger("COMBAT")
-            # logging.basicConfig(filename=fname,level=logging.INFO)  
+            self.log = custom_log.get_logger("COMBAT") 
             self.log.info("Battle is about to start!") 
-            # self.log = logging.getLogger("Combat")
                                 
         except NameError as e:
             print(e)
@@ -75,4 +70,4 @@ class Battle:
                 self.log.info(str(k))
                 self.print_army_rec(k, ranks, outcome, depth + 1)
             form_str = "{:*^" + str(len(str(army))) + "}"
-            print(form_str.format(""))
+            self.log.info(form_str.format(""))

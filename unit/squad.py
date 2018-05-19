@@ -58,8 +58,8 @@ class Squad(Unit):
                 for d_unit in foe.get_member_list():
                     if "get_healing_strenght" in dir(a_unit):
                         log.info(a_unit.get_name() + " applies heal")
-                        a_unit.heal(self.get_member_list())         
-                    d_unit = a_unit.attack(d_unit)
+                        a_unit.heal(self.get_member_list(), log)         
+                    d_unit = a_unit.attack(d_unit, log)
         return foe             
 
     def calculate_initiative(self):
