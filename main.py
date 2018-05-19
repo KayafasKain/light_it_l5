@@ -16,6 +16,7 @@ from file_works import json_input_generator as jig
 from file_works import json_input_adapter as jia
 
 
+
 def initiate(squad, units, formations, strategies, side_name, ranks, sizes, depth=0):
     if depth == len(ranks)-1:
         for i in range(int(sizes[ranks[depth]])):            

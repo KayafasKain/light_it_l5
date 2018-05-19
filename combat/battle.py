@@ -1,4 +1,6 @@
+from file_works import custom_logger as cla
 import logging
+import os
 import os
 """
     Work in progress yet
@@ -17,10 +19,14 @@ class Battle:
             self.army_one = army_one
             self.army_two = army_two
             self.ranks = ranks
-            dir_path = os.path.dirname(os.path.realpath(__file__))
-            fname = dir_path + '_goes.log'
-            logging.basicConfig(filename=fname,level=logging.INFO)   
-            self.log = logging.getLogger("Combat")
+            # logging.config.dictConfig()
+            # dir_path = os.path.dirname(os.path.realpath(__file__))
+            # fname = dir_path + '_goes.log'
+            custom_log = cla.CustomLogger()
+            self.log = custom_log.get_logger("COMBAT")
+            # logging.basicConfig(filename=fname,level=logging.INFO)  
+            self.log.info("Battle is about to start!") 
+            # self.log = logging.getLogger("Combat")
                                 
         except NameError as e:
             print(e)
@@ -30,10 +36,7 @@ class Battle:
             Determines attack turns
         """
         self.log.info("Battle is about to start!")
-        form_str = "{:/^125}"
-        print(form_str.format("")) 
-        print(form_str.format("( BATTLE REPORT )"))
-        print(form_str.format(""))         
+        form_str = "{:/^125}"      
         while self.army_one.is_capable() and self.army_two.is_capable():
             if self.army_one > self.army_two:  
                 self.log.info(self.army_one.get_name() + " strikes first! ")
@@ -56,27 +59,19 @@ class Battle:
         """
         if depth == 0:
             form_str = "{:=^125}"
-            print(form_str.format(""))
-            print(form_str.format(army.get_name() + " " + outcome))
             self.log.info(form_str.format(army.get_name() + " " + outcome))
-            print(form_str.format(""))
-            print(str(army))
             self.log.info(str(army))
-            print()
         elif ranks[depth-1] == "army":
             form_str = "{:+^" + str(len(str(army))) + "}"
-            print(form_str.format(""))
             self.log.info(form_str.format(""))            
         elif ranks[depth-1] == "squad":
             form_str = "{:_^" + str(len(str(army))) + "}"
-            print(form_str.format(""))
             self.log.info(form_str.format(""))
 
         if depth == len(ranks):
             return
         else:
-            for k in army.get_member_list():             
-                print(str(k))
+            for k in army.get_member_list():
                 self.log.info(str(k))
                 self.print_army_rec(k, ranks, outcome, depth + 1)
             form_str = "{:*^" + str(len(str(army))) + "}"

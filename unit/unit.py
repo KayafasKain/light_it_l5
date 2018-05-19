@@ -16,6 +16,8 @@ class Unit:
         """
         self.name = name
         self.unit_type = unit_type
+        self.cooldown = 0
+        self.cooldown_default = 0
         self.damage = damage
         self.expirience = 1
         self.attack_speed = attack_speed * unit_type.get_attack_speed_rate()
@@ -52,7 +54,8 @@ class Unit:
         except(e):
             print(e)
 
-        if self.get_health() > 0:
+        self.decrease_cooldown()
+        if self.get_health() > 0 and self.get_cooldown() == 0:
             faster_strike = self.get_attack_speed() > foe.get_attack_speed()
             strikes_per_turn = 1
             if faster_strike:
@@ -65,7 +68,7 @@ class Unit:
                 foe.set_health(foe.get_health() - (self.get_damage() * self.expirience))
                 if foe.get_health() <= 0:
                     break
-                    
+                            
             self.expirience += 0.01
 
             foe.refresh_stats()
@@ -75,7 +78,7 @@ class Unit:
                 self.set_health(self.get_health() - foe.get_damage())
 
             self.refresh_stats()
-            
+            self.set_cooldown()
 
         return foe
 
@@ -98,8 +101,37 @@ class Unit:
                 self.set_attack_speed(0) 
                 self.set_damage(0)                                  
 
+    def calculate_default_cooldown(self):
+        """
+            Calculating unit cooldown, depends on
+            all stats
+        """
+        self.cooldown_default = (self.get_damage() * 0.7) + (self.get_health() * 0.3) + (self.get_attack_speed() * 1.1)
+        return int(self.cooldown_default / self.get_attack_speed())
 
+    def get_cooldown_default(self):
+        """
+            Get default cooldown
+        """
+        return self.cooldown_default
 
+    def get_cooldown(self):
+        """
+            Get current cooldown
+        """
+        return self.cooldown
+
+    def set_cooldown(self):
+        """ set cooldown """
+        self.cooldown = self.get_cooldown_default()
+
+    def decrease_cooldown(self):
+        """ 
+            Decreasing cooldown
+        """
+        self.cooldown -= 1
+        if self.cooldown < 0:
+            self.cooldown = 0       
 
     def get_type(self):
         """ Returns unit type """

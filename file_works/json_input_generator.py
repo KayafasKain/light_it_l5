@@ -56,8 +56,6 @@ class JsonInputGenerator():
         for i in range(randint(sq_min, sq_max)):
             squads.append(self.generate_squad(i, v_min, v_max, s_min, s_max))
 
-        print("STRATARAERARARAR")
-        print(strategy)
         return {
             "name": name,
             "strategy": strategy,
