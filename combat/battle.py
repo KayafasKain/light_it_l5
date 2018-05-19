@@ -35,7 +35,7 @@ class Battle:
         print(form_str.format("( BATTLE REPORT )"))
         print(form_str.format(""))         
         while self.army_one.is_capable() and self.army_two.is_capable():
-            if self.army_one.get_initiative() > self.army_two.get_initiative():  
+            if self.army_one > self.army_two:  
                 self.log.info(self.army_one.get_name() + " strikes first! ")
                 self.army_one.attack(self.army_two, self.log)
             else:

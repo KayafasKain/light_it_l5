@@ -18,6 +18,15 @@ class Army(Squad):
         super().__init__(name, member_list, formation)
         self.strategy = strategy
 
+    # def __gt__(self, foe):
+    #     return self.calculate_initiative() > foe.calculate_initiative()
+
+    # def __lt__(self, foe):
+    #     return self.calculate_initiative() < foe.calculate_initiative()
+
+    # def __eq__(self, foe):
+    #     return self.calculate_initiative() == foe.calculate_initiative()
+
     def __str__(self):
         """
             Converting class instace to string
@@ -30,7 +39,7 @@ class Army(Squad):
             "{} {:^.3f}".format("initiative:", self.initiative),
             "{} {}".format(str(self.get_casulties()), "lost")
         ]
-        string =  "|".join("{: ^25}".format(x) for x in prop_list)
+        string =  "|".join("{: ^15}".format(x) for x in prop_list)
 
         return string          
 

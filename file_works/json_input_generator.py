@@ -162,7 +162,7 @@ def main():
     args = parser.parse_args()
 
     dir_path = os.path.dirname(__file__)
-    fname = dir_path + "_armies.json"
+    fname = dir_path + args.forces[0] + ".json"
     generator = JsonInputGenerator(args.forces[0])
     result = generator.generate_force( 
         args.army_num, args.strategy[0],

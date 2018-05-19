@@ -23,6 +23,8 @@ class Unit:
         self.health_default = self.health
         self.attack_speed_default = self.attack_speed
         
+    def __repr__(self):
+        return self.name    
 
     def __str__(self):
         """
@@ -36,7 +38,7 @@ class Unit:
                         "{:^.3f}{}".format(self.health,"hp")
                     ]
 
-        string = "|".join("{: ^25}".format(x) for x in prop_list)
+        string = "|".join("{: ^15}".format(x) for x in prop_list)
 
         return "|{}|".format(string)
 

@@ -22,6 +22,15 @@ class Squad(Unit):
         self.refresh_formation()
         self.calculate_initiative()
 
+    def __gt__(self, foe):
+        return self.calculate_initiative() > foe.calculate_initiative()
+
+    def __lt__(self, foe):
+        return self.calculate_initiative() < foe.calculate_initiative()
+
+    def __eq__(self, foe):
+        return self.calculate_initiative() == foe.calculate_initiative()
+
     def __str__(self):
         """
             Converting class instace to string
@@ -36,7 +45,7 @@ class Squad(Unit):
             "{:^.3f}{}".format(self.initiative, "initiative:"),
             "{} {}".format(str(self.get_casulties()), "lost")
         ]
-        string =  "|".join("{: ^25}".format(x) for x in prop_list)
+        string =  "|".join("{: ^15}".format(x) for x in prop_list)
 
         return string       
 
@@ -69,6 +78,7 @@ class Squad(Unit):
                     total_health += i.get_health() * 0.70
 
             self.initiative = (total_damage + total_speed + total_health) / len(self.member_list) 
+        return self.initiative
 
     def get_casulties(self):
         """

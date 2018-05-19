@@ -87,7 +87,7 @@ def main():
         from_file = False
 
         try:
-            if int(input("enter '1', to load from file:")):
+            if int(input("enter '1', to load from file:")) == 1:
                 jsone_one = jia.JsonInputAdapter(input("path_one:"))
                 jsone_two = jia.JsonInputAdapter(input("path_two:"))
                 from_file = True
@@ -105,7 +105,6 @@ def main():
             sizes["squad"] = 2
             sizes["army"] = 2        
 
-        print(str(jsone.convert()))
         if from_file:
             eq_force = jsone_one.convert()
             som_force = jsone_two.convert()
@@ -113,8 +112,10 @@ def main():
             eq_force = ar.Army("lf_middle " , [], formations[randint(0, len(formations)-1)], strategies[randint(0, len(strategies)-1)])
             som_force = ar.Army("sombra " , [], formations[randint(0, len(formations)-1)], strategies[randint(0, len(strategies)-1)])
 
+
         initiate(eq_force, eq_units, formations, strategies, eq_force.get_name(), ranks, sizes, 0)
-        initiate(som_force, som_units, formations, strategies, som_force.get_name(), ranks, sizes, 0)           
+        initiate(som_force, som_units, formations, strategies, som_force.get_name(), ranks, sizes, 0) 
+
 
         battle = ba.Battle(eq_force, som_force, ranks)
         battle.print_army_rec(eq_force, ranks)
